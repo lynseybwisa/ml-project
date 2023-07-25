@@ -1,6 +1,7 @@
 import sys
 from src.logger import logging
 
+#formatted error message that includes the file name, line number, and the given error message.
 def error_message_details(error,error_detail:sys):
     _,_,exc_tb=error_detail.exc_info()
     file_name=exc_tb.tb_frame.f_code.co_filename
