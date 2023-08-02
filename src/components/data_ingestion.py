@@ -1,4 +1,7 @@
-# read dataset from a particular data source
+'''
+This file is responsible for ingesting and preparing the data for the machine learning pipeline.
+read dataset from a particular data source
+'''
 import os
 import sys
 from src.exception import CustomException
@@ -11,6 +14,14 @@ from dataclasses import dataclass
 from src.components.data_transformation import DataTransformation
 from src.components.data_transformation import DataTransformationConfig
 
+from src.components.model_trainer import ModelTrainerConfig
+from src.components.model_trainer import ModelTrainer
+
+'''
+A data class DataIngestionCofig is defined to store the paths of the raw data, training data, and test data.
+The class DataIngestion contains a method initiate_data_ingestion() 
+that reads the data from a CSV file (notebook\data\stud.csv) and performs a train-test split.
+'''
 @dataclass
 class DataIngestionCofig:
     train_data_path: str=os.path.join('artifacts', "train.csv")
@@ -48,9 +59,16 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e,sys)
 
+'''
+The if __name__ == "__main__": block initiates the data ingestion process, 
+stores the training and test data paths, and then proceeds to data transformation and model training.
+'''
 if __name__=="__main__":
     obj=DataIngestion()
     train_data,test_data=obj.initiate_data_ingestion()
 
     data_transformation=DataTransformation()
     train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)
+
+    modeltrainer=ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr,test_arr))

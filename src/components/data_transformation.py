@@ -1,4 +1,6 @@
-# feature engineering, data cleaning
+'''
+This file handles data preprocessing, feature engineering, and data cleaning.
+'''
 import sys
 from dataclasses import dataclass
 
@@ -21,6 +23,12 @@ from src.utils import save_object
 class DataTransformationConfig:
     preprocessor_obj_file_path=os.path.join('artifacts',"preprocessor.pkl")
 
+'''
+The class DataTransformation contains a method get_data_transformer_object() 
+that creates a pipeline for applying different transformations to numerical and categorical columns.
+The method initiate_data_transformation(train_path, test_path) reads the training and test data, 
+applies the preprocessing pipeline on them, and returns the preprocessed data along with the path of the preprocessor object.
+'''
 class DataTransformation:
     def __init__(self):
         self.data_transformation_config=DataTransformationConfig()
